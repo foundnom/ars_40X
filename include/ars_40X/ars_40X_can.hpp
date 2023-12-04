@@ -1,5 +1,5 @@
 //
-// Created by shivesh on 9/13/19.
+// Modified by fnm on 23/12/4
 //
 
 #ifndef ARS_40X_ARS_40X_HPP
@@ -75,6 +75,8 @@ class ARS_40X_CAN {
   radar_state::RadarState *get_radar_state();
 
   radar_cfg::RadarCfg *get_radar_cfg();
+  
+  radar_filter_cfg::RadarFilterCfg *get_radar_filter_cfg(); //定义滤波器类指针
 
   virtual void send_cluster_0_status() {};
 
@@ -116,6 +118,8 @@ class ARS_40X_CAN {
   radar_state::RadarState radar_state_;
 
   radar_cfg::RadarCfg radar_cfg_;
+
+  radar_filter_cfg::RadarFilterCfg radar_filter_cfg_; //增加
 };
 }
 

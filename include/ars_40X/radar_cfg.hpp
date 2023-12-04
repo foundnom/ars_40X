@@ -9,6 +9,44 @@
 #include <cstdint>
 
 namespace ars_40X {
+namespace radar_filter_cfg{
+  typedef union radar_filter_cfg{
+    struct{
+      uint64_t Reserved1 : 1;
+      uint64_t FilterCfg_Valid : 1;
+      uint64_t FilterCfg_Active : 1; 
+      uint64_t FilterCfg_Index : 4; 
+      uint64_t FilterCfg_Type : 1;
+      //uint64_t FilterCfg_Min_Lifetime1 : 4;
+      uint64_t FilterCfg_Min_RCS1 : 4;
+      uint64_t Reserved2 : 4;
+      //uint64_t FilterCfg_Min_Lifetime2 : 8;
+      uint64_t FilterCfg_Min_RCS2 : 8;
+      //uint64_t Filter_Max_Lifetime1 : 4;
+      uint64_t FilterCfg_Max_RCS1 : 4;
+      uint64_t Reserved3 : 4;
+      //uint64_t FilterCfg_Max_Lifetime2 : 8;
+      uint64_t FilterCfg_Max_RCS2 : 8;
+    }data={};
+    uint8_t raw_data[5];
+  }radar_filter_cfg;
+
+  class RadarFilterCfg
+  {
+  private:
+    radar_filter_cfg radar_filter_cfg_msg;
+  public:
+    RadarFilterCfg();
+    ~RadarFilterCfg();
+    bool set_filter_min_RCS(uint64_t max_RCS, bool valid=true);
+    radar_filter_cfg *get_radar_filter_cfg();
+  };
+  
+}
+
+
+
+
 namespace radar_cfg {
 typedef union radar_cfg {
   struct {
