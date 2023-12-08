@@ -27,6 +27,8 @@ RadarCfgROS::RadarCfgROS(ros::NodeHandle &nh, ARS_40X_CAN *ars_40X_can) :
       nh.advertiseService("set_store_in_nvm", &RadarCfgROS::set_store_in_nvm, this);
   set_rcs_threshold_service_ =
       nh.advertiseService("set_rcs_threshold", &RadarCfgROS::set_rcs_threshold, this);
+  set_filter_min_rcs_service_=
+      nh.advertiseService("set_filter_min_rcs", &RadarCfgROS::set_filter_min_rcs, this);
 }
 
 RadarCfgROS::~RadarCfgROS() {
@@ -123,5 +125,14 @@ bool RadarCfgROS::set_rcs_threshold(
   ars_40X_can_->send_radar_data(can_messages::RadarCfg);
   return true;
 }
+
+bool RadarCfgROS::set_filter_min_rcs(
+    RadarFilter::Request &req,
+    RadarFilter::Response & /*res*/) {
+  if (!radar_filter_cfg_->set_filter_min_rcs(static_cast<uint64_t>(req.FilterRCS))) {//修改filter的raw_data值
+    return false;
+  }
+  ars_40X_can_->send_radar_data(can_messages::FilterCfg);//传入带有帧头的数据，即在上一句raw_data值已更新得值
+  return true;
 
 }

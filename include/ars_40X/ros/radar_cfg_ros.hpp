@@ -65,10 +65,15 @@ class RadarCfgROS {
       RCSThreshold::Request &req,
       RCSThreshold::Response & /*res*/);
 
+  bool set_filter_min_rcs(//callback
+      RadarFilter::Request &req,
+      RadarFilter::Response & /*res*/);
+
  private:
   ARS_40X_CAN *ars_40X_can_;
 
   radar_cfg::RadarCfg *radar_cfg_;
+  radar_filter_cfg::RadarFilterCfg *radar_filter_cfg_;
 
   ros::ServiceServer set_max_distance_service_;
 
@@ -89,6 +94,8 @@ class RadarCfgROS {
   ros::ServiceServer set_store_in_nvm_service_;
 
   ros::ServiceServer set_rcs_threshold_service_;
+  //最小rcs服务
+  ros::ServiceServer set_filter_min_rcs_service_;
 };
 }
 
