@@ -81,6 +81,12 @@ bool ARS_40X_CAN::send_radar_data(uint32_t frame_id) {
                  2,
                  yaw_rate_information_.get_yaw_rate_information()->raw_data);
       break;
+    case FilterCfg:
+      can_.write(frame_id,
+                 5,
+                 radar_filter_cfg_.get_radar_filter_cfg()->raw_data);
+      break;
+
 #if DEBUG
       default: printf("Frame ID not supported\n");
 #endif
@@ -130,5 +136,9 @@ radar_state::RadarState *ARS_40X_CAN::get_radar_state() {
 
 radar_cfg::RadarCfg *ARS_40X_CAN::get_radar_cfg() {
   return &radar_cfg_;
+}
+
+radar_filter_cfg::RadarFilterCfg *ARS_40X_CAN::get_radar_filter_cfg(){
+  return &radar_filter_cfg_;
 }
 }
