@@ -17,6 +17,7 @@
 #include "ars_40X/RCSThreshold.h"
 #include "ars_40X/SensorID.h"
 #include "ars_40X/SortIndex.h"
+#include "ars_40X/RadarFilter.h"
 
 namespace ars_40X {
 class RadarCfgROS {

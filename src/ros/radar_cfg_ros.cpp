@@ -129,10 +129,11 @@ bool RadarCfgROS::set_rcs_threshold(
 bool RadarCfgROS::set_filter_min_rcs(
     RadarFilter::Request &req,
     RadarFilter::Response & /*res*/) {
-  if (!radar_filter_cfg_->set_filter_min_rcs(static_cast<uint64_t>(req.FilterRCS))) {//修改filter的raw_data值
+  if (!radar_filter_cfg_->set_filter_min_RCS(static_cast<uint64_t>(req.FilterRCS))) {//修改filter的raw_data值
     return false;
   }
   ars_40X_can_->send_radar_data(can_messages::FilterCfg);//传入带有帧头的数据，即在上一句raw_data值已更新得值
   return true;
 
+}
 }

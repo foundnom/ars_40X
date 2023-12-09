@@ -5,7 +5,34 @@
 #include <ars_40X/radar_cfg.hpp>
 
 namespace ars_40X {
+namespace radar_filter_cfg{
+RadarFilterCfg::RadarFilterCfg(){
+  //new added
+  radar_filter_cfg_msg.data.FilterCfg_Min_RCS1 = 2;
+  radar_filter_cfg_msg.data.FilterCfg_Min_RCS2 = 0;
+  radar_filter_cfg_msg.data.FilterCfg_Type = 0;
+  radar_filter_cfg_msg.data.FilterCfg_Index = 0x5;//RCS模式
+  }
+RadarFilterCfg::~RadarFilterCfg(){
+
+  }
+bool RadarFilterCfg::set_filter_min_RCS(uint64_t min_rcs, bool valid){
+    //TODO
+    if(min_rcs < 1 || min_rcs > 10){
+      return false;
+    }
+    radar_filter_cfg_msg.data.FilterCfg_Min_RCS1 = min_rcs >> 8;//转为64位，方便进行数据发送，因为can帧的数据为64位
+    radar_filter_cfg_msg.data.FilterCfg_Min_RCS2 = min_rcs & 0xff;//转为64位，方便进行数据发送，因为can帧的数据为64位
+    radar_filter_cfg_msg.data.FilterCfg_Valid = static_cast<uint64_t>(valid);
+    return true;
+  }
+radar_filter_cfg *RadarFilterCfg::get_radar_filter_cfg() {
+  return &radar_filter_cfg_msg;
+  }
+}
+
 namespace radar_cfg {
+
 RadarCfg::RadarCfg() {
   radar_cfg_msg.data.RadarCfg_MaxDistance_valid = 0;
   radar_cfg_msg.data.RadarCfg_SensorID_valid = 0;
